@@ -7,6 +7,11 @@ import Account from "../screens/Account";
 import Favorites from "../screens/Favorites";
 import Search from "../screens/Search";
 import TopRestaurans from "../screens/TopRestaurans";
+import RestaurantsStack from "./RestaurantsStack";
+import AccountStack from "./AccountStack";
+import FavoritesStack from "./FavoritesStack";
+import SearchStack from "./SearchStack";
+import TopRestauransStack from "./TopRestauransStack";
 
 const Tab = createBottomTabNavigator();
 const Navigations = () => {
@@ -15,27 +20,27 @@ const Navigations = () => {
       <Tab.Navigator>
         <Tab.Screen
           name="Restaurants"
-          component={Restaurants}
+          component={RestaurantsStack}
           options={{ title: "restaurantes " }}
         />
         <Tab.Screen
           name="Account"
-          component={Account}
+          component={AccountStack}
           options={{ title: "account " }}
         />
         <Tab.Screen
           name="Favorites"
-          component={Favorites}
+          component={FavoritesStack}
           options={{ title: "favoritos " }}
         />
         <Tab.Screen
           name="Search"
-          component={Search}
+          component={SearchStack}
           options={{ title: "Buscar " }}
         />
         <Tab.Screen
           name="TopRestaurans"
-          component={TopRestaurans}
+          component={TopRestauransStack}
           options={{ title: "top restaurantes " }}
         />
       </Tab.Navigator>
