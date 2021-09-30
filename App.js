@@ -1,12 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Navigations from './app/routers/Navigations';
+import React from "react";
+import Navigations from "./app/routers/Navigations";
+import { firebaseApp } from "./app/utils/firebase";
+
+
 
 export default function App() {
-  return (
-   <Navigations/>
-  );
+
+  return <Navigations />;
 }
-
-
