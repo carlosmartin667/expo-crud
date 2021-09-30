@@ -22,32 +22,33 @@ const Navigations = () => {
         }}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color }) => screenOptions(route, color),
+          headerShown: false,
         })}
       >
         <Tab.Screen
           name="Restaurants"
           component={RestaurantsStack}
-          options={{ title: "restaurantes " }}
+          options={{ title: "" }}
         />
         <Tab.Screen
           name="Account"
           component={AccountStack}
-          options={{ title: "account " }}
+          options={{ title: "" }}
         />
         <Tab.Screen
           name="Favorites"
           component={FavoritesStack}
-          options={{ title: "favoritos " }}
+          options={{ title: "" }}
         />
         <Tab.Screen
           name="Search"
           component={SearchStack}
-          options={{ title: "Buscar " }}
+          options={{ title: "" }}
         />
         <Tab.Screen
           name="TopRestaurans"
           component={TopRestauransStack}
-          options={{ title: "top restaurantes " }}
+          options={{ title: "" }}
         />
       </Tab.Navigator>
     </NavigationContainer>
