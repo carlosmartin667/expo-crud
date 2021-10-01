@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Restaurants from "../screens/Restaurants";
 import Account from "../screens/Account/Account";
 import Login from "../screens/Account/Login";
+import Register from "../screens/Account/Register";
 
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +20,11 @@ const AccountStack = () => {
         name="Login"
         component={Login}
         options={{ title: "iniciar seccion " }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{ title: "Registrar " }}
       />
     </Stack.Navigator>
   );
