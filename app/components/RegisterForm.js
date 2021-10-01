@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Input } from "react-native-elements";
-
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 const RegisterForm = () => {
   return (
     <View style={styles.formContainer}>
