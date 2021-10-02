@@ -5,6 +5,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import validateEmail from "../utils/validations";
 import * as firebase from "firebase";
+import Loading from "./Loading";
 
 const RegisterForm = (props) => {
   const { toastRef } = props;
@@ -32,6 +33,7 @@ const RegisterForm = (props) => {
       console.log("La contraseña tiene que tener al menos 6 caracteres");
     } else {
       console.log("ok");
+      setLoading(true);
       firebase
         .auth()
         .createUserWithEmailAndPassword(formData.email, formData.password)
@@ -103,6 +105,7 @@ const RegisterForm = (props) => {
         buttonStyle={styles.btnRegister}
         onPress={onSubmit}
       />
+      <Loading text={loadingText} isVisible={loading} />
     </View>
   );
 };
