@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/core";
+import { isEmpty, size } from "lodash";
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import validateEmail from "../utils/validations";
-
 
 const RegisterForm = (props) => {
   const { toastRef } = props;
@@ -16,11 +16,27 @@ const RegisterForm = (props) => {
   const onSubmit = () => {
     console.log(formData);
     console.log(validateEmail(formData.email));
+
+    if (
+      isEmpty(formData.email) ||
+      isEmpty(formData.password) ||
+      isEmpty(formData.repeatPassword)
+    ) {
+      console.log("campós obligatorios");
+    } else if (!validateEmail(formData.email)) {
+      toastRef.current.show("El email no es correcto");
+    } else if (formData.password !== formData.repeatPassword) {
+      console.log("Las contraseñas tienen que ser iguales");
+    } else if (size(formData.password) < 6) {
+      console.log("La contraseña tiene que tener al menos 6 caracteres");
+    } else {
+      console.log("ok");
+    }
   };
 
   const onChange = (e, type) => {
     //...formdata  trae todos los objetos , [type]= este indica q elementos quieres actualizar
-    //e.nativeEvent.text = busca el campo 
+    //e.nativeEvent.text = busca el campo
     setFormData({ ...formData, [type]: e.nativeEvent.text });
   };
 

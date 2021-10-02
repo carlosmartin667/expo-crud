@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useRef } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import RegisterForm from "../../components/RegisterForm";
 
 const Register = () => {
+
+  const toastRef = useRef();
+
   return (
     <KeyboardAwareScrollView>
       <Image
