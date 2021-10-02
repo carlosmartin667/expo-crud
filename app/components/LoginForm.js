@@ -1,82 +1,82 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 import { isEmpty } from "lodash";
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from "@react-navigation/core";
 import * as firebase from "firebase";
-import validateEmail from '../utils/validations';
-import Loading from './Loading';
+import validateEmail from "../utils/validations";
+import Loading from "./Loading";
 
 const LoginForm = () => {
-    
-     const [showPassword, setShowPassword] = useState(false);
-     const [formData, setFormData] = useState(defaultFormValue());
-     const [loading, setLoading] = useState(false);
-     const navigation = useNavigation();
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState(defaultFormValue());
+  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
 
-     const onChange = (e, type) => {
-       setFormData({ ...formData, [type]: e.nativeEvent.text });
-     };
+  const onChange = (e, type) => {
+    setFormData({ ...formData, [type]: e.nativeEvent.text });
+  };
 
-     const onSubmit = () => {
-       if (isEmpty(formData.email) || isEmpty(formData.password)) {
-         console.log("Todos los campos son obligatorios");
-       } else if (!validateEmail(formData.email)) {
-         console.log("El email no es correcto");
-       } else {
-         setLoading(false);
-         firebase
-           .auth()
-           .signInWithEmailAndPassword(formData.email, formData.password)
-           .then(() => {
-             setLoading(false);
-             navigation.navigate("AccountStack");
-           })
-           .catch(() => {
-             setLoading(false);
-            console.log("Email o contraseña incorrecta");
-           });
-       }
-     };
-    return (
-      <View style={styles.formContainer}>
-        <Input
-          placeholder="Correo electronico"
-          containerStyle={styles.inputForm}
-          onChange={(e) => onChange(e, "email")}
-          rightIcon={
-            <Icon
-              type="material-community"
-              name="at"
-              iconStyle={styles.iconRight}
-            />
-          }
-        />
-        <Input
-          placeholder="Contraseña"
-          containerStyle={styles.inputForm}
-          password={true}
-          secureTextEntry={showPassword ? false : true}
-          onChange={(e) => onChange(e, "password")}
-          rightIcon={
-            <Icon
-              type="material-community"
-              name={showPassword ? "eye-off-outline" : "eye-outline"}
-              iconStyle={styles.iconRight}
-              onPress={() => setShowPassword(!showPassword)}
-            />
-          }
-        />
-        <Button
-          title="Iniciar sesión"
-          containerStyle={styles.btnContainerLogin}
-          buttonStyle={styles.btnLogin}
-          onPress={onSubmit}
-        />
-        <Loading isVisible={loading} text="Iniciando sesión" />
-      </View>
-    );
-}
+  const onSubmit = () => {
+    if (isEmpty(formData.email) || isEmpty(formData.password)) {
+      console.log("Todos los campos son obligatorios");
+    } else if (!validateEmail(formData.email)) {
+      console.log("El email no es correcto");
+    } else {
+       setLoading(false);
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(formData.email, formData.password)
+        .then(() => {
+           setLoading(false);
+          navigation.navigate("AccountStack");
+        })
+        .catch(() => {
+          setLoading(false);
+          console.log("Email o contraseña incorrecta");
+        });
+    }
+  };
+  return (
+    <View style={styles.formContainer}>
+      <Input
+        placeholder="Correo electronico"
+        containerStyle={styles.inputForm}
+        onChange={(e) => onChange(e, "email")}
+        rightIcon={
+          <Icon
+            type="material-community"
+            name="at"
+            iconStyle={styles.iconRight}
+          />
+        }
+      />
+      <Input
+        placeholder="Contraseña"
+        containerStyle={styles.inputForm}
+        password={true}
+        secureTextEntry={showPassword ? false : true}
+        onChange={(e) => onChange(e, "password")}
+        rightIcon={
+          <Icon
+            type="material-community"
+            name={showPassword ? "eye-off-outline" : "eye-outline"}
+            iconStyle={styles.iconRight}
+            onPress={() => setShowPassword(!showPassword)}
+          />
+        }
+      />
+      <Button
+        title="Iniciar sesión"
+        containerStyle={styles.btnContainerLogin}
+        buttonStyle={styles.btnLogin}
+        onPress={onSubmit}
+      />
+      {loading? <Loading isVisible={loading} text="Iniciando sesión" /> : <Text></Text>}
+     
+    </View>
+  );
+};
 function defaultFormValue() {
   return {
     email: "",
@@ -105,4 +105,4 @@ const styles = StyleSheet.create({
     color: "#c1c1c1",
   },
 });
-export default LoginForm
+export default LoginForm;

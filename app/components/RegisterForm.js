@@ -105,7 +105,12 @@ const RegisterForm = (props) => {
         buttonStyle={styles.btnRegister}
         onPress={onSubmit}
       />
-      <Loading text={loadingText} isVisible={loading} />
+      {loading ? (
+        <Loading isVisible={loading} text="Iniciando sesión" />
+      ) : (
+        <Text></Text>
+      )}
+  
     </View>
   );
 };

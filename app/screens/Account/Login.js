@@ -12,8 +12,7 @@ const Login = () => {
         style={styles.logo}
       />
       <View style={styles.viewContainer}>
-        <LoginForm />
-     
+        <LoginForm />   
         <CreateAccount />
       </View>
       <Divider style={styles.divider} />
@@ -21,7 +20,6 @@ const Login = () => {
         {/* <LoginFacebook toastRef={toastRef} /> */}
         <Text>LoginForm</Text>
       </View>
-      {/* <Toast ref={toastRef} position="center" opacity={0.9} /> */}
     </ScrollView>
   );
 };
