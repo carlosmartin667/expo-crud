@@ -37,7 +37,7 @@ const RegisterForm = (props) => {
         .createUserWithEmailAndPassword(formData.email, formData.password)
         .then((response) => {
           setLoading(false);
-          navigation.navigate("Account");
+          navigation.navigate("AccountStack");
           console.log(response);
         })
         .catch(() => {
