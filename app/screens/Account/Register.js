@@ -4,9 +4,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import RegisterForm from "../../components/RegisterForm";
 
 const Register = () => {
-
-  const toastRef = useRef();
-
   return (
     <KeyboardAwareScrollView>
       <Image
@@ -20,6 +17,7 @@ const Register = () => {
     </KeyboardAwareScrollView>
   );
 };
+
 const styles = StyleSheet.create({
   logo: {
     width: "100%",

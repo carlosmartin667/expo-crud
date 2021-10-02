@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import validateEmail from "../utils/validations";
+import * as firebase from "firebase";
 
 const RegisterForm = (props) => {
   const { toastRef } = props;
@@ -24,13 +25,25 @@ const RegisterForm = (props) => {
     ) {
       console.log("campós obligatorios");
     } else if (!validateEmail(formData.email)) {
-      toastRef.current.show("El email no es correcto");
+      console.log("El email no es correcto");
     } else if (formData.password !== formData.repeatPassword) {
       console.log("Las contraseñas tienen que ser iguales");
     } else if (size(formData.password) < 6) {
       console.log("La contraseña tiene que tener al menos 6 caracteres");
     } else {
       console.log("ok");
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(formData.email, formData.password)
+        .then((response) => {
+          setLoading(false);
+          // navigation.navigate("account");
+          console.log(response);
+        })
+        .catch(() => {
+          setLoading(false);
+          console.log("El email ya esta en uso, pruebe con otro");
+        });
     }
   };
 
