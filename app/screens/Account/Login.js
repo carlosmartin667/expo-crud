@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { Divider } from "react-native-elements";
+import LoginForm from "../../components/LoginForm";
 const Login = () => {
   return (
     <ScrollView>
@@ -11,8 +12,8 @@ const Login = () => {
         style={styles.logo}
       />
       <View style={styles.viewContainer}>
-        {/* <LoginForm toastRef={toastRef} /> */}
-        <Text>LoginForm</Text>
+        <LoginForm />
+     
         <CreateAccount />
       </View>
       <Divider style={styles.divider} />
