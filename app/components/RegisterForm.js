@@ -2,6 +2,8 @@ import { useNavigation } from "@react-navigation/core";
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
+import validateEmail from "../utils/validations";
+
 
 const RegisterForm = (props) => {
   const { toastRef } = props;
@@ -11,11 +13,23 @@ const RegisterForm = (props) => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
+  const onSubmit = () => {
+    console.log(formData);
+    console.log(validateEmail(formData.email));
+  };
+
+  const onChange = (e, type) => {
+    //...formdata  trae todos los objetos , [type]= este indica q elementos quieres actualizar
+    //e.nativeEvent.text = busca el campo 
+    setFormData({ ...formData, [type]: e.nativeEvent.text });
+  };
+
   return (
     <View style={styles.formContainer}>
       <Input
         placeholder="correo electronico"
         containerStyle={styles.inputForm}
+        onChange={(e) => onChange(e, "email")}
         rightIcon={
           <Icon
             type="material-community"
@@ -29,6 +43,7 @@ const RegisterForm = (props) => {
         containerStyle={styles.inputForm}
         password={true}
         secureTextEntry={showPassword ? false : true}
+        onChange={(e) => onChange(e, "password")}
         rightIcon={
           <Icon
             type="material-community"
@@ -43,6 +58,7 @@ const RegisterForm = (props) => {
         containerStyle={styles.inputForm}
         password={true}
         secureTextEntry={showRepeatPassword ? false : true}
+        onChange={(e) => onChange(e, "repeatPassword")}
         rightIcon={
           <Icon
             type="material-community"
@@ -56,18 +72,19 @@ const RegisterForm = (props) => {
         title="Unirse"
         containerStyle={styles.btnContainerRegister}
         buttonStyle={styles.btnRegister}
+        onPress={onSubmit}
       />
     </View>
   );
 };
 
-const defaultFormValue=()=> {
+const defaultFormValue = () => {
   return {
     email: "",
     password: "",
     repeatPassword: "",
   };
-}
+};
 
 const styles = StyleSheet.create({
   formContainer: {
