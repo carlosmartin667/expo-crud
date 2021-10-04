@@ -64,5 +64,6 @@ export default class ImagePickerExample extends React.Component {
     const ref = firebase.storage().ref().child(`avatar/${aleatorio}`);
     console.log("Entro4");
     ref.put(blob);
+    
   };
 }
