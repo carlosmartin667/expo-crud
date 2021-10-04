@@ -1,20 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import * as firebase from "firebase";
+import Loading from "../../components/Loading";
+import InfoUser from "../../components/InfoUser";
 
 const UserLogged = () => {
-    return (
-      <View>
-        <Button
-          title="Cerrar sesión"
-          buttonStyle={styles.btnCloseSession}
-          titleStyle={styles.btnCloseSessionText}
-          onPress={() => firebase.auth().signOut()}
-        />
-      </View>
-    );
-}
+  const [userInfo, setUserInfo] = useState(null);
+  const [loading, setloading] = useState(false);
+  const [LoadingText, setLoadingText] = useState("");
+  const [realoadUserInfo, setRealoadUserInfo] = useState(false);
+  useEffect(() => {
+    (async () => {
+      const user = await firebase.auth().currentUser;
+      // console.log(user);
+      setUserInfo(user);
+    })();
+    setRealoadUserInfo(false);
+  }, [realoadUserInfo]);
+  return (
+    <View>
+      {userInfo && <InfoUser userInfo={userInfo} />}
+
+      <Button
+        title="Cerrar sesión"
+        buttonStyle={styles.btnCloseSession}
+        titleStyle={styles.btnCloseSessionText}
+        onPress={() => firebase.auth().signOut()}
+      />
+
+      {/* <Loading text={LoadingText} isVisible={loading} /> */}
+    </View>
+  );
+};
 const styles = StyleSheet.create({
   viewUserInfo: {
     minHeight: "100%",
@@ -35,4 +53,4 @@ const styles = StyleSheet.create({
     color: "#00a680",
   },
 });
-export default UserLogged
+export default UserLogged;
