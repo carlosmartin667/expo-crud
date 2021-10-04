@@ -4,6 +4,7 @@ import { Button } from "react-native-elements";
 import * as firebase from "firebase";
 import Loading from "../../components/Loading";
 import InfoUser from "../../components/InfoUser";
+import ImagePickerExample from "../../components/ImagePickerExample ";
 
 const UserLogged = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -20,8 +21,8 @@ const UserLogged = () => {
   }, [realoadUserInfo]);
   return (
     <View>
-      {userInfo && <InfoUser userInfo={userInfo} />}
-
+      {/* {userInfo && <InfoUser userInfo={userInfo} />} */}
+<ImagePickerExample/>
       <Button
         title="Cerrar sesión"
         buttonStyle={styles.btnCloseSession}
