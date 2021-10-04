@@ -29,6 +29,7 @@ const InfoUser = (props) => {
           {displayName ? displayName : "Anónimo"}
         </Text>
         <Text>{email ? email : "Socia Login"}</Text>
+        
       </View>
     </View>
   );
