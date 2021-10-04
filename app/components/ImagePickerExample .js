@@ -49,7 +49,7 @@ export default class ImagePickerExample extends React.Component {
         this.setState({ image: result.uri });
       }
 
-    //    this.uploadImage(result.uri);
+      this.uploadImage(result.uri);
     } catch (E) {
       console.log(E);
     }
@@ -57,9 +57,12 @@ export default class ImagePickerExample extends React.Component {
   uploadImage = async (uri) => {
     console.log("Entro");
     const response = await fetch(uri);
+    console.log("Entro2");
     const blob = await response.blob();
-
-    const ref = firebase.storage().ref().child(`avatar/${uid}`);
-     ref.put(blob);
+    console.log("Entro3");
+    var aleatorio = Math.round(Math.random() * 10);
+    const ref = firebase.storage().ref().child(`avatar/${aleatorio}`);
+    console.log("Entro4");
+    ref.put(blob);
   };
 }
