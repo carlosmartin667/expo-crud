@@ -2,7 +2,7 @@ import * as React from "react";
 import { Button, Image, View, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
-
+import * as firebase from "firebase";
 export default class ImagePickerExample extends React.Component {
   state = {
     image: null,
@@ -49,9 +49,17 @@ export default class ImagePickerExample extends React.Component {
         this.setState({ image: result.uri });
       }
 
-      console.log(result);
+    //    this.uploadImage(result.uri);
     } catch (E) {
       console.log(E);
     }
+  };
+  uploadImage = async (uri) => {
+    console.log("Entro");
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    const ref = firebase.storage().ref().child(`avatar/${uid}`);
+     ref.put(blob);
   };
 }
