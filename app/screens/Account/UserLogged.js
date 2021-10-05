@@ -5,6 +5,7 @@ import * as firebase from "firebase";
 import Loading from "../../components/Loading";
 import InfoUser from "../../components/InfoUser";
 import ImagePickerExample from "../../components/ImagePickerExample ";
+import Picktur from "../../components/Picktur";
 
 const UserLogged = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -22,7 +23,7 @@ const UserLogged = () => {
   return (
     <View>
       {/* {userInfo && <InfoUser userInfo={userInfo} />} */}
-<ImagePickerExample/>
+      <Picktur />
       <Button
         title="Cerrar sesión"
         buttonStyle={styles.btnCloseSession}

@@ -3,6 +3,8 @@ import { Button, Image, View, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import * as firebase from "firebase";
+
+
 export default class ImagePickerExample extends React.Component {
   state = {
     image: null,
