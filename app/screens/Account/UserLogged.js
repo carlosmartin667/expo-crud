@@ -23,7 +23,7 @@ const UserLogged = () => {
   return (
     <View>
       {/* {userInfo && <InfoUser userInfo={userInfo} />} */}
-      <Picktur />
+      <ImagePickerExample />
       <Button
         title="Cerrar sesión"
         buttonStyle={styles.btnCloseSession}
