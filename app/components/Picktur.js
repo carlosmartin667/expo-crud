@@ -4,7 +4,7 @@ import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import * as firebase from "firebase";
 
-const Picktur = () => {
+const Picktur = ({ uid }) => {
   const [stateImg, setStateImg] = useState(null);
 
   const getPermissionAsync = async () => {
@@ -26,15 +26,25 @@ const Picktur = () => {
       });
       if (!result.cancelled) {
         setStateImg(result.uri);
+        uploadImage(stateImg);
       }
     } catch (E) {
       console.log(E);
     }
   };
-
+  const uploadImage = async (stateImg) => {
+    console.log("Entro");
+    const response = await fetch(stateImg);
+    console.log("Entro2");
+    const blob = await response.blob();
+    console.log("Entro3");
+    const ref = firebase.storage().ref().child(`avatar/${uid}`);
+    console.log("Entro4");
+    ref.put(blob);
+  };
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button title="Pick an image from camera roll" onPress={_pickImage} />
+    <View style={{}}>
+      <Button title="edit" onPress={_pickImage} />
       {stateImg && (
         <Image source={stateImg} style={{ width: 200, height: 200 }} />
       )}

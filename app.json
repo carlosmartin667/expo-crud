@@ -31,11 +31,11 @@
         "LOCATION",
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"
-      ]
+      ],
+      "package": "com.cmoscoso.appmycmmc"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     }
-    
   }
 }

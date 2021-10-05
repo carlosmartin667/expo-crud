@@ -22,8 +22,8 @@ const UserLogged = () => {
   }, [realoadUserInfo]);
   return (
     <View>
-      {/* {userInfo && <InfoUser userInfo={userInfo} />} */}
-      <ImagePickerExample />
+      {userInfo && <InfoUser userInfo={userInfo} />}
+     
       <Button
         title="Cerrar sesión"
         buttonStyle={styles.btnCloseSession}
