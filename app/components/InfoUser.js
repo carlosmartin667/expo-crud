@@ -5,6 +5,7 @@ import * as firebase from "firebase";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 import Picktur from "./Picktur";
+import ImagePickerExample from "./ImagePickerExample ";
 
 const InfoUser = (props) => {
   const {
@@ -13,7 +14,7 @@ const InfoUser = (props) => {
     setLoading,
     setLoadingText,
   } = props;
-
+  console.log(photoURL);
   return (
     <View style={styles.viewUserInfo}>
       <Avatar
@@ -24,11 +25,12 @@ const InfoUser = (props) => {
         containerStyle={styles.userInfoAvatar}
         source={
           photoURL
-            ? { uri: photoURL }
+            ? photoURL
             : require("../../assets/img/3.1 avatar-default.jpg")
         }
       />
-      <Picktur uid={uid} />
+
+      <ImagePickerExample />
       <View>
         <Text style={styles.displayName}>
           {displayName ? displayName : "Anónimo"}

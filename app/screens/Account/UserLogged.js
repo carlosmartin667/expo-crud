@@ -6,6 +6,7 @@ import Loading from "../../components/Loading";
 import InfoUser from "../../components/InfoUser";
 import ImagePickerExample from "../../components/ImagePickerExample ";
 import Picktur from "../../components/Picktur";
+import AccountOptions from "../../components/AccountOptions";
 
 const UserLogged = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -15,7 +16,6 @@ const UserLogged = () => {
   useEffect(() => {
     (async () => {
       const user = await firebase.auth().currentUser;
-      // console.log(user);
       setUserInfo(user);
     })();
     setRealoadUserInfo(false);
@@ -23,14 +23,13 @@ const UserLogged = () => {
   return (
     <View>
       {userInfo && <InfoUser userInfo={userInfo} />}
-     
+      <AccountOptions userInfo={userInfo} />
       <Button
         title="Cerrar sesión"
         buttonStyle={styles.btnCloseSession}
         titleStyle={styles.btnCloseSessionText}
         onPress={() => firebase.auth().signOut()}
       />
-
       {/* <Loading text={LoadingText} isVisible={loading} /> */}
     </View>
   );

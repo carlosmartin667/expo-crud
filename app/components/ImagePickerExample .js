@@ -4,7 +4,6 @@ import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import * as firebase from "firebase";
 
-
 export default class ImagePickerExample extends React.Component {
   state = {
     image: null,
@@ -15,10 +14,7 @@ export default class ImagePickerExample extends React.Component {
 
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Button
-          title="holaaaa"
-          onPress={this._pickImage}
-        />
+        <Button title="holaaaa" onPress={this._pickImage} />
         {image && (
           <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
         )}
@@ -62,10 +58,11 @@ export default class ImagePickerExample extends React.Component {
     console.log("Entro2");
     const blob = await response.blob();
     console.log("Entro3");
-    var aleatorio = Math.round(Math.random() * 10);
-    const ref = firebase.storage().ref().child(`avatar/${aleatorio}`);
+
+    const user = await firebase.auth().currentUser;
+
+    const ref = firebase.storage().ref().child(`avatar/${user.uid}`);
     console.log("Entro4");
     ref.put(blob);
-    
   };
 }

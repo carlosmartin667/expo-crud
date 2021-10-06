@@ -41,6 +41,25 @@ const Picktur = ({ uid }) => {
     const ref = firebase.storage().ref().child(`avatar/${uid}`);
     console.log("Entro4");
     ref.put(blob);
+    updatePhotoUrl();
+  };
+
+  const updatePhotoUrl = () => {
+    firebase
+      .storage()
+      .ref(`avatar/${uid}`)
+      .getDownloadURL()
+      .then(async (response) => {
+        const update = {
+          photoURL: response,
+        };
+        console.log(update);
+        await firebase.auth().currentUser.updateProfile(update);
+     
+      })
+      .catch(() => {
+        console.log("Error al actualizar el avatar.");
+      });
   };
   return (
     <View style={{}}>
