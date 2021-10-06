@@ -1,18 +1,32 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { ListItem, Avatar } from "react-native-elements";
+import { ListItem, Avatar, Icon, Badge } from "react-native-elements";
 import { map } from "lodash";
 
 const AccountOptions = ({ userInfo }) => {
-  const menuOptions = generateOptions();
-  console.log(menuOptions);
+
+
+  const selectedComponent = (key) => {
+    console.log(key);
+  };
+const menuOptions = generateOptions(selectedComponent);
   return (
-    <View>
+    <View style={styles.menuItem}>
       {menuOptions.map((item, index) => (
-        <ListItem key={index} bottomDivider>
+        <ListItem key={index} onPress={item.onPress}>
+          <Icon
+            name={item.iconNameLeft}
+            type={item.iconType}
+            color={item.iconColorLeft}
+          />
           <ListItem.Content>
             <ListItem.Title>{item.title}</ListItem.Title>
           </ListItem.Content>
+          <Icon
+            name={item.iconNameRight}
+            type={item.iconType}
+            color={item.iconColorRight}
+          />
         </ListItem>
       ))}
     </View>
