@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { ListItem, Avatar, Icon, Badge } from "react-native-elements";
 import { map } from "lodash";
+import Modal from "../Modal";
 
 const AccountOptions = ({ userInfo }) => {
-
-
   const selectedComponent = (key) => {
     console.log(key);
   };
-const menuOptions = generateOptions(selectedComponent);
+  const [showModal, setShowModal] = useState(true);
+  const menuOptions = generateOptions(selectedComponent);
   return (
     <View style={styles.menuItem}>
       {menuOptions.map((item, index) => (
@@ -29,6 +29,9 @@ const menuOptions = generateOptions(selectedComponent);
           />
         </ListItem>
       ))}
+      <Modal isVisible={showModal} setIsVisible={setShowModal}>
+        <Text>hola mundo</Text>
+      </Modal>
     </View>
   );
 };
