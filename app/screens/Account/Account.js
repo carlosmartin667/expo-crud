@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import * as firebase from "firebase";
 import UserLogged from "./UserLogged";
 import UserGuest from "./UserGuest";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Account/Loading";
 
 const Account = () => {
   const [login, setLogin] = useState(null);

@@ -26,7 +26,7 @@ const InfoUser = (props) => {
         source={
           photoURL
             ? photoURL
-            : require("../../assets/img/3.1 avatar-default.jpg")
+            : require("../../../assets/img/3.1 avatar-default.jpg")
         }
       />
 

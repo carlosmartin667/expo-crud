@@ -3,7 +3,7 @@ import { isEmpty, size } from "lodash";
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
-import validateEmail from "../utils/validations";
+import validateEmail from "../../utils/validations";
 import * as firebase from "firebase";
 import Loading from "./Loading";
 

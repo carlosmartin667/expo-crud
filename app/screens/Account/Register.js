@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import RegisterForm from "../../components/RegisterForm";
+import RegisterForm from "../../components/Account/RegisterForm";
 
 const Register = () => {
   return (

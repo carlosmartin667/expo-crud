@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { Divider } from "react-native-elements";
-import LoginForm from "../../components/LoginForm";
+import LoginForm from "../../components/Account/LoginForm";
 const Login = () => {
   return (
     <ScrollView>

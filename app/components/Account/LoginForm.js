@@ -4,7 +4,7 @@ import { Input, Icon, Button } from "react-native-elements";
 import { isEmpty } from "lodash";
 import { useNavigation } from "@react-navigation/core";
 import * as firebase from "firebase";
-import validateEmail from "../utils/validations";
+import validateEmail from "../../utils/validations";
 import Loading from "./Loading";
 
 const LoginForm = () => {

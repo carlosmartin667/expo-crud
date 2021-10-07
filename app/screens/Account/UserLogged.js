@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import * as firebase from "firebase";
-import Loading from "../../components/Loading";
-import InfoUser from "../../components/InfoUser";
-import ImagePickerExample from "../../components/ImagePickerExample ";
-import Picktur from "../../components/Picktur";
-import AccountOptions from "../../components/AccountOptions";
+
+
+
+import AccountOptions from "../../components/Account/AccountOptions";
+import InfoUser from "../../components/Account/InfoUser";
 
 const UserLogged = () => {
   const [userInfo, setUserInfo] = useState(null);
