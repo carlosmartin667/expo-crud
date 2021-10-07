@@ -3,8 +3,6 @@ import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import * as firebase from "firebase";
 
-
-
 import AccountOptions from "../../components/Account/AccountOptions";
 import InfoUser from "../../components/Account/InfoUser";
 
@@ -13,17 +11,23 @@ const UserLogged = () => {
   const [loading, setloading] = useState(false);
   const [LoadingText, setLoadingText] = useState("");
   const [realoadUserInfo, setRealoadUserInfo] = useState(false);
+
+  const nombreCambio = async () => {
+
+    setUserInfo(await firebase.auth().currentUser);
+  };
+
   useEffect(() => {
-    (async () => {
-      const user = await firebase.auth().currentUser;
-      setUserInfo(user);
-    })();
+    nombreCambio();
     setRealoadUserInfo(false);
   }, [realoadUserInfo]);
   return (
     <View>
       {userInfo && <InfoUser userInfo={userInfo} />}
-      <AccountOptions userInfo={userInfo} />
+      <AccountOptions
+        userInfo={userInfo}
+        setRealoadUserInfo={setRealoadUserInfo}
+      />
       <Button
         title="Cerrar sesión"
         buttonStyle={styles.btnCloseSession}

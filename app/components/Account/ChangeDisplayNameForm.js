@@ -12,6 +12,33 @@ const ChangeDisplayNameForm = ({
   const [newDisplayName, setNewDisplayName] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit = () => {
+    setError(null);
+    if (!newDisplayName) {
+      setError("El nombre no puede estar vacio.");
+    } else if (displayName === newDisplayName) {
+      setError("El nombre no puede ser igual al actual.");
+    } else {
+      setIsLoading(true);
+      const update = {
+        displayName: newDisplayName,
+      };
+      firebase
+        .auth()
+        .currentUser.updateProfile(update)
+        .then(() => {
+          setIsLoading(false);
+          setRealoadUserInfo(true);
+          setShowModal(false);
+        })
+        .catch((e) => {
+          console.log(e);
+          setError("Error al actualizar el nombre.");
+          setIsLoading(false);
+        });
+    }
+  };
   return (
     <View style={styles.view}>
       <Input
@@ -24,14 +51,14 @@ const ChangeDisplayNameForm = ({
         }}
         defaultValue={displayName || ""}
         onChange={(e) => setNewDisplayName(e.nativeEvent.text)}
-        // errorMessage={error}
+        errorMessage={error}
       />
       <Button
         title="Cambiar nombre"
         containerStyle={styles.btnContainer}
         buttonStyle={styles.btn}
-        // onPress={onSubmit}
-        // loading={isLoading}
+        onPress={onSubmit}
+        loading={isLoading}
       />
     </View>
   );
