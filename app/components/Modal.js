@@ -8,11 +8,9 @@ const Modal = (props) => {
   const toggleOverlay = () => {
     setVisible(!visible);
   };
- const closeModal = () => setIsVisible(false);
+  const closeModal = () => setIsVisible(false);
   return (
     <View>
-      <Button title="Open Overlay" onPress={toggleOverlay} />
-
       <Overlay
         isVisible={isVisible}
         onBackdropPress={toggleOverlay}

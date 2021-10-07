@@ -3,12 +3,49 @@ import { View, Text, StyleSheet } from "react-native";
 import { ListItem, Avatar, Icon, Badge } from "react-native-elements";
 import { map } from "lodash";
 import Modal from "../Modal";
+import ChangeDisplayNameForm from "./ChangeDisplayNameForm";
+import ChangeEmailForm from "./ChangeEmailForm";
 
-const AccountOptions = ({ userInfo }) => {
+const AccountOptions = ({ userInfo, toastRef, setRealoadUserInfo }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const [renderComponent, setRenderComponent] = useState(null);
+
   const selectedComponent = (key) => {
-    console.log(key);
+    switch (key) {
+      case "displayName":
+        setRenderComponent(
+          <ChangeDisplayNameForm
+            displayName={userInfo.displayName}
+            setShowModal={setShowModal}
+            toastRef={toastRef}
+            setRealoadUserInfo={setRealoadUserInfo}
+          />
+        );
+        setShowModal(true);
+        break;
+      case "email":
+        setRenderComponent(
+          <ChangeEmailForm
+            email={userInfo.email}
+            setShowModal={setShowModal}
+            toastRef={toastRef}
+            setRealoadUserInfo={setRealoadUserInfo}
+          />
+        );
+        setShowModal(true);
+        break;
+      case "password":
+        setRenderComponent();
+        // <ChangePasswordForm setShowModal={setShowModal} toastRef={toastRef} />
+        setShowModal(true);
+        break;
+      default:
+        setRenderComponent(null);
+        setShowModal(false);
+        break;
+    }
   };
-  const [showModal, setShowModal] = useState(true);
   const menuOptions = generateOptions(selectedComponent);
   return (
     <View style={styles.menuItem}>
@@ -29,9 +66,11 @@ const AccountOptions = ({ userInfo }) => {
           />
         </ListItem>
       ))}
-      <Modal isVisible={showModal} setIsVisible={setShowModal}>
-        <Text>hola mundo</Text>
-      </Modal>
+      {renderComponent && (
+        <Modal isVisible={showModal} setIsVisible={setShowModal}>
+          {renderComponent}
+        </Modal>
+      )}
     </View>
   );
 };
