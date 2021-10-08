@@ -66,7 +66,7 @@ const ChangeEmailForm = (props) => {
           name: "at",
           color: "#c2c2c2",
         }}
-        onChange={(e) => setNewDisplayName(e.nativeEvent.text)}
+        onChange={(e) => onChange(e, "email")}
         errorMessage={errors.email}
       />
       <Input
