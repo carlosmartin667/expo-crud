@@ -67,7 +67,7 @@ const ChangeEmailForm = (props) => {
           color: "#c2c2c2",
         }}
         onChange={(e) => setNewDisplayName(e.nativeEvent.text)}
-          errorMessage={errors.email}
+        errorMessage={errors.email}
       />
       <Input
         placeholder="Contraseña"
