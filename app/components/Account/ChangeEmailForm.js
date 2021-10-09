@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Input, Button } from "react-native-elements";
 import * as firebase from "firebase";
-import validateEmail from "../../utils/validations";
+
 import { reauthenticate } from "../../utils/api";
+import validateEmail from "../../utils/validations";
 
 const ChangeEmailForm = (props) => {
   const { email, setShowModal, toastRef, setRealoadUserInfo } = props;
