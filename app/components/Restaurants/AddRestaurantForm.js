@@ -18,6 +18,43 @@ const AddRestaurantForm = (props) => {
   const [isVisibleMap, setIsVisibleMap] = useState(false);
   const [locationRestaurant, setLocationRestaurant] = useState(null);
 
+  const addRestaurant = () => {
+    if (!restaurantName || !restaurantAddress || !restaurantDescription) {
+      console.log("Todos los campos del formulario son obligatorios");
+    } else if (size(imagesSelected) === 0) {
+      console.log("El restaurante tiene que tener almenos una foto");
+    } else if (!locationRestaurant) {
+      console.log("Tienes que localizar el restaurnate en el mapa");
+    } else {
+      setIsLoading(true);
+      uploadImageStorage().then((response) => {
+        db.collection("restaurants")
+          .add({
+            name: restaurantName,
+            address: restaurantAddress,
+            description: restaurantDescription,
+            location: locationRestaurant,
+            images: response,
+            rating: 0,
+            ratingTotal: 0,
+            quantityVoting: 0,
+            createAt: new Date(),
+            createBy: firebase.auth().currentUser.uid,
+          })
+          .then(() => {
+            setIsLoading(false);
+            navigation.navigate("restaurants");
+          })
+          .catch(() => {
+            setIsLoading(false);
+            toastRef.current.show(
+              "Error al subir el restaurante, intentelo más tarde"
+            );
+          });
+      });
+    }
+  };
+
   return (
     <ScrollView style={styles.scrollView}>
       <FormAdd
@@ -26,6 +63,11 @@ const AddRestaurantForm = (props) => {
         setRestaurantDescription={setRestaurantDescription}
         setIsVisibleMap={setIsVisibleMap}
         locationRestaurant={locationRestaurant}
+      />
+      <Button
+        title="Crear Restaurante"
+        onPress={addRestaurant}
+        buttonStyle={styles.btnAddRestaurant}
       />
     </ScrollView>
   );
