@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Icon } from "react-native-elements";
+
+import firebase from "firebase/app";
+import { firebaseApp } from "../../utils/firebase";
 
 const Restaurants = (props) => {
   const { navigation } = props;
@@ -11,18 +14,25 @@ const Restaurants = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const limitRestaurants = 10;
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((userInfo) => {
+      setUser(userInfo);
+    });
+  }, []);
+
   return (
     <View style={styles.viewBody}>
       <Text>Restaurants Restaurants2</Text>
-
-      <Icon
-        reverse
-        type="material-community"
-        name="plus"
-        color="#00a680"
-        containerStyle={styles.btnContainer}
-        onPress={() => navigation.navigate("add-restaurant")}
-      />
+      {user && (
+        <Icon
+          reverse
+          type="material-community"
+          name="plus"
+          color="#00a680"
+          containerStyle={styles.btnContainer}
+          onPress={() => navigation.navigate("add-restaurant")}
+        />
+      )}
     </View>
   );
 };
