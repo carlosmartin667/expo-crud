@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from "react-native";
 import { Icon, Avatar, Image, Input, Button } from "react-native-elements";
+import { map, size, filter } from "lodash";
 
 const AddRestaurantForm = (props) => {
   const { toastRef, setIsLoading, navigation } = props;
@@ -64,6 +65,11 @@ const AddRestaurantForm = (props) => {
         setIsVisibleMap={setIsVisibleMap}
         locationRestaurant={locationRestaurant}
       />
+      <UploadImage
+        toastRef={toastRef}
+        imagesSelected={imagesSelected}
+        setImagesSelected={setImagesSelected}
+      />
       <Button
         title="Crear Restaurante"
         onPress={addRestaurant}
@@ -108,6 +114,82 @@ const FormAdd = (props) => {
     </View>
   );
 };
+
+function UploadImage(props) {
+  const { toastRef, imagesSelected, setImagesSelected } = props;
+
+  const imageSelect = async () => {
+    const resultPermissions = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL
+    );
+
+    if (resultPermissions === "denied") {
+      toastRef.current.show(
+        "Es necesario aceptar los permisos de la galeria, si los has rechazado tienes que ir ha ajustes y activarlos manualmente.",
+        3000
+      );
+    } else {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+      });
+
+      if (result.cancelled) {
+        toastRef.current.show(
+          "Has cerrado la galeria sin seleccionar ninguna imagen",
+          2000
+        );
+      } else {
+        setImagesSelected([...imagesSelected, result.uri]);
+      }
+    }
+  };
+
+  const removeImage = (image) => {
+    Alert.alert(
+      "Eliminar Imagen",
+      "¿Estas seguro de que quieres eliminar la imagen?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Eliminar",
+          onPress: () => {
+            setImagesSelected(
+              filter(imagesSelected, (imageUrl) => imageUrl !== image)
+            );
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  return (
+    <View style={styles.viewImages}>
+      {size(imagesSelected) < 4 && (
+        <Icon
+          type="material-community"
+          name="camera"
+          color="#7a7a7a"
+          containerStyle={styles.containerIcon}
+          onPress={imageSelect}
+        />
+      )}
+      {map(imagesSelected, (imageRestaurant, index) => (
+        <Avatar
+          key={index}
+          style={styles.miniatureStyle}
+          source={{ uri: imageRestaurant }}
+          onPress={() => removeImage(imageRestaurant)}
+        />
+      ))}
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   scrollView: {
     height: "100%",
