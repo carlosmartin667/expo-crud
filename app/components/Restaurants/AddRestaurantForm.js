@@ -17,9 +17,16 @@ const AddRestaurantForm = (props) => {
   const [imagesSelected, setImagesSelected] = useState([]);
   const [isVisibleMap, setIsVisibleMap] = useState(false);
   const [locationRestaurant, setLocationRestaurant] = useState(null);
+
   return (
     <ScrollView style={styles.scrollView}>
-      <FormAdd />
+      <FormAdd
+        setRestaurantName={setRestaurantName}
+        setRestaurantAddress={setRestaurantAddress}
+        setRestaurantDescription={setRestaurantDescription}
+        setIsVisibleMap={setIsVisibleMap}
+        locationRestaurant={locationRestaurant}
+      />
     </ScrollView>
   );
 };
