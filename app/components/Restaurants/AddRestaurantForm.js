@@ -12,9 +12,14 @@ import { map, size, filter } from "lodash";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
- import MapView from "react-native-maps";
+import MapView from "react-native-maps";
 import Modal from "../Modal";
-
+import uuid from "random-uuid-v4";
+import firebase from "firebase/app";
+import { firebaseApp } from "../../utils/firebase";
+import "firebase/storage";
+import "firebase/firestore";
+const db = firebase.firestore(firebaseApp);
 const widthScreen = Dimensions.get("window").width;
 
 const AddRestaurantForm = (props) => {
@@ -32,8 +37,8 @@ const AddRestaurantForm = (props) => {
       console.log("Todos los campos del formulario son obligatorios");
     } else if (size(imagesSelected) === 0) {
       console.log("El restaurante tiene que tener almenos una foto");
-    // } else if (!locationRestaurant) {
-    //   console.log("Tienes que localizar el restaurnate en el mapa");
+      // } else if (!locationRestaurant) {
+      //   console.log("Tienes que localizar el restaurnate en el mapa");
     } else {
       setIsLoading(true);
       uploadImageStorage().then((response) => {
@@ -52,17 +57,16 @@ const AddRestaurantForm = (props) => {
           })
           .then(() => {
             setIsLoading(false);
-            navigation.navigate("restaurants");
+            navigation.navigate("Restaurants");
           })
           .catch(() => {
             setIsLoading(false);
-            toastRef.current.show(
-              "Error al subir el restaurante, intentelo más tarde"
-            );
+            console.log("Error al subir el restaurante, intentelo más tarde");
           });
       });
     }
   };
+
   const uploadImageStorage = async () => {
     const imageBlob = [];
 
@@ -85,6 +89,7 @@ const AddRestaurantForm = (props) => {
 
     return imageBlob;
   };
+
   return (
     <ScrollView style={styles.scrollView}>
       <ImageRestaurant imagenRestaurant={imagesSelected[0]} />
@@ -132,6 +137,7 @@ const ImageRestaurant = (props) => {
     </View>
   );
 };
+
 const FormAdd = (props) => {
   const {
     setRestaurantName,
@@ -182,10 +188,10 @@ const Map = (props) => {
       const statusPermissions = resultPermissions.permissions.location.status;
 
       if (statusPermissions !== "granted") {
-        toastRef.current.show(
-          "Tienes que aceptar los permisos de localizacion para crear un restaurante",
-          3000
-        );
+         console.log(
+           "Tienes que aceptar los permisos de localizacion para crear un restaurante",
+           3000
+         );
       } else {
         const loc = await Location.getCurrentPositionAsync({});
         setLocation({
@@ -200,7 +206,7 @@ const Map = (props) => {
 
   const confirmLocation = () => {
     setLocationRestaurant(location);
-    toastRef.current.show("Localizacion guardada correctamente");
+   console.log("Localizacion guardada correctamente");
     setIsVisibleMap(false);
   };
 
@@ -241,7 +247,8 @@ const Map = (props) => {
     </Modal>
   );
 };
-function UploadImage(props) {
+
+const UploadImage = (props) => {
   const { toastRef, imagesSelected, setImagesSelected } = props;
 
   const imageSelect = async () => {
@@ -315,7 +322,7 @@ function UploadImage(props) {
       ))}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -384,4 +391,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#00a680",
   },
 });
+
 export default AddRestaurantForm;
