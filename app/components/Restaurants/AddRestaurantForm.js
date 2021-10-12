@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,9 @@ import { Icon, Avatar, Image, Input, Button } from "react-native-elements";
 import { map, size, filter } from "lodash";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
+import * as Location from "expo-location";
+ import MapView from "react-native-maps";
+import Modal from "../Modal";
 
 const widthScreen = Dimensions.get("window").width;
 
@@ -24,12 +27,13 @@ const AddRestaurantForm = (props) => {
   const [locationRestaurant, setLocationRestaurant] = useState(null);
 
   const addRestaurant = () => {
+    console.log("fff");
     if (!restaurantName || !restaurantAddress || !restaurantDescription) {
       console.log("Todos los campos del formulario son obligatorios");
     } else if (size(imagesSelected) === 0) {
       console.log("El restaurante tiene que tener almenos una foto");
-    } else if (!locationRestaurant) {
-      console.log("Tienes que localizar el restaurnate en el mapa");
+    // } else if (!locationRestaurant) {
+    //   console.log("Tienes que localizar el restaurnate en el mapa");
     } else {
       setIsLoading(true);
       uploadImageStorage().then((response) => {
@@ -59,7 +63,28 @@ const AddRestaurantForm = (props) => {
       });
     }
   };
+  const uploadImageStorage = async () => {
+    const imageBlob = [];
 
+    await Promise.all(
+      map(imagesSelected, async (image) => {
+        const response = await fetch(image);
+        const blob = await response.blob();
+        const ref = firebase.storage().ref("restaurants").child(uuid());
+        await ref.put(blob).then(async (result) => {
+          await firebase
+            .storage()
+            .ref(`restaurants/${result.metadata.name}`)
+            .getDownloadURL()
+            .then((photoUrl) => {
+              imageBlob.push(photoUrl);
+            });
+        });
+      })
+    );
+
+    return imageBlob;
+  };
   return (
     <ScrollView style={styles.scrollView}>
       <ImageRestaurant imagenRestaurant={imagesSelected[0]} />
@@ -79,6 +104,13 @@ const AddRestaurantForm = (props) => {
         title="Crear Restaurante"
         onPress={addRestaurant}
         buttonStyle={styles.btnAddRestaurant}
+        toastRef={toastRef}
+      />
+      <Map
+        isVisibleMap={isVisibleMap}
+        setIsVisibleMap={setIsVisibleMap}
+        setLocationRestaurant={setLocationRestaurant}
+        toastRef={toastRef}
       />
     </ScrollView>
   );
@@ -137,6 +169,78 @@ const FormAdd = (props) => {
   );
 };
 
+const Map = (props) => {
+  const { isVisibleMap, setIsVisibleMap, setLocationRestaurant, toastRef } =
+    props;
+  const [location, setLocation] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const resultPermissions = await Permissions.askAsync(
+        Permissions.LOCATION
+      );
+      const statusPermissions = resultPermissions.permissions.location.status;
+
+      if (statusPermissions !== "granted") {
+        toastRef.current.show(
+          "Tienes que aceptar los permisos de localizacion para crear un restaurante",
+          3000
+        );
+      } else {
+        const loc = await Location.getCurrentPositionAsync({});
+        setLocation({
+          latitude: loc.coords.latitude,
+          longitude: loc.coords.longitude,
+          latitudeDelta: 0.001,
+          longitudeDelta: 0.001,
+        });
+      }
+    })();
+  }, []);
+
+  const confirmLocation = () => {
+    setLocationRestaurant(location);
+    toastRef.current.show("Localizacion guardada correctamente");
+    setIsVisibleMap(false);
+  };
+
+  return (
+    <Modal isVisible={isVisibleMap} setIsVisible={setIsVisibleMap}>
+      <View>
+        {location && (
+          <MapView
+            style={styles.mapStyle}
+            initialRegion={location}
+            showsUserLocation={true}
+            onRegionChange={(region) => setLocation(region)}
+          >
+            <MapView.Marker
+              coordinate={{
+                latitude: location.latitude,
+                longitude: location.longitude,
+              }}
+              draggable
+            />
+          </MapView>
+        )}
+        <View style={styles.viewMapBtn}>
+          <Button
+            title="Guardar Ubicacion"
+            containerStyle={styles.viewMapBtnContainerSave}
+            buttonStyle={styles.viewMapBtnSave}
+            onPress={confirmLocation}
+          />
+          <Button
+            title="Cancelar Ubicacion"
+            containerStyle={styles.viewMapBtnContainerCancel}
+            buttonStyle={styles.viewMapBtnCancel}
+            onPress={() => setIsVisibleMap(false)}
+          />
+        </View>
+      </View>
+    </Modal>
+  );
+};
 function UploadImage(props) {
   const { toastRef, imagesSelected, setImagesSelected } = props;
 
