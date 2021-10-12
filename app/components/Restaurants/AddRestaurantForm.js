@@ -9,6 +9,10 @@ import {
 } from "react-native";
 import { Icon, Avatar, Image, Input, Button } from "react-native-elements";
 import { map, size, filter } from "lodash";
+import * as Permissions from "expo-permissions";
+import * as ImagePicker from "expo-image-picker";
+
+const widthScreen = Dimensions.get("window").width;
 
 const AddRestaurantForm = (props) => {
   const { toastRef, setIsLoading, navigation } = props;
@@ -58,6 +62,7 @@ const AddRestaurantForm = (props) => {
 
   return (
     <ScrollView style={styles.scrollView}>
+      <ImageRestaurant imagenRestaurant={imagesSelected[0]} />
       <FormAdd
         setRestaurantName={setRestaurantName}
         setRestaurantAddress={setRestaurantAddress}
@@ -76,6 +81,23 @@ const AddRestaurantForm = (props) => {
         buttonStyle={styles.btnAddRestaurant}
       />
     </ScrollView>
+  );
+};
+
+const ImageRestaurant = (props) => {
+  const { imagenRestaurant } = props;
+
+  return (
+    <View style={styles.viewPhoto}>
+      <Image
+        source={
+          imagenRestaurant
+            ? { uri: imagenRestaurant }
+            : require("../../../assets/img/10.1 no-image.png")
+        }
+        style={{ width: widthScreen, height: 200 }}
+      />
+    </View>
   );
 };
 const FormAdd = (props) => {
@@ -124,7 +146,7 @@ function UploadImage(props) {
     );
 
     if (resultPermissions === "denied") {
-      toastRef.current.show(
+      console.log(
         "Es necesario aceptar los permisos de la galeria, si los has rechazado tienes que ir ha ajustes y activarlos manualmente.",
         3000
       );
@@ -135,7 +157,7 @@ function UploadImage(props) {
       });
 
       if (result.cancelled) {
-        toastRef.current.show(
+        console.log(
           "Has cerrado la galeria sin seleccionar ninguna imagen",
           2000
         );
@@ -146,6 +168,7 @@ function UploadImage(props) {
   };
 
   const removeImage = (image) => {
+    console.log(image);
     Alert.alert(
       "Eliminar Imagen",
       "¿Estas seguro de que quieres eliminar la imagen?",
