@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Restaurants from "../screens/Restaurants/Restaurants";
 import AddRestaurant from "../screens/Restaurants/AddRestaurant";
+import Restaurant from "../screens/Restaurants/Restaurant";
 
 const Stack = createNativeStackNavigator();
 const RestaurantsStack = () => {
@@ -18,6 +19,12 @@ const RestaurantsStack = () => {
         component={AddRestaurant}
         options={{ title: "añadir nuevo restaurante " }}
       />
+      <Stack.Screen
+        name="restaurant"
+        component={Restaurant}
+        options={{ title: "detalles de Restaurant " }}
+      />
+      
     </Stack.Navigator>
   );
 };

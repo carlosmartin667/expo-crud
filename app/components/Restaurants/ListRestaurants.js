@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const ListRestaurants = (props) => {
   const { restaurants, handleLoadMore, isLoading } = props;
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <View>
       {size(restaurants) > 0 ? (
@@ -36,7 +36,8 @@ const ListRestaurants = (props) => {
     </View>
   );
 };
-const Restaurant=(props)=> {
+
+const Restaurant = (props) => {
   const { restaurant, navigation } = props;
   const { id, images, name, address, description } = restaurant.item;
   const imageRestaurant = images ? images[0] : null;
@@ -73,9 +74,9 @@ const Restaurant=(props)=> {
       </View>
     </TouchableOpacity>
   );
-}
+};
 
-const FooterList=(props)=> {
+const FooterList = (props) => {
   const { isLoading } = props;
 
   if (isLoading) {
@@ -91,7 +92,7 @@ const FooterList=(props)=> {
       </View>
     );
   }
-}
+};
 
 const styles = StyleSheet.create({
   loaderRestaurants: {
@@ -128,4 +129,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
 export default ListRestaurants;
