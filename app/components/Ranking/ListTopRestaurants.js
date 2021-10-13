@@ -40,7 +40,7 @@ function Restaurant(props) {
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate("restaurants", {
+        navigation.navigate("Restaurants", {
           screen: "restaurant",
           params: { id },
         })
